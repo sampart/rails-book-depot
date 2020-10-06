@@ -1,5 +1,6 @@
 class CartsController < ApplicationController
   before_action :set_cart, only: [:show, :edit, :update, :destroy]
+  before_action :only_your_cart, only: [:show, :edit, :update, :destroy]
   rescue_from ActiveRecord::RecordNotFound, with: :invalid_cart
 
   # GET /carts
@@ -72,6 +73,13 @@ class CartsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def cart_params
       params.fetch(:cart, {})
+    end
+
+    def only_your_cart
+      if @cart.id != session[:cart_id]      
+        logger.error "Attempt to access cart not in session: #{params[:id]}"
+        redirect_to store_index_url, notice: 'Invalid cart'
+      end
     end
 
     def invalid_cart
