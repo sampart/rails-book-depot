@@ -1,6 +1,6 @@
-<% if notice %>
-  <aside id="notice"><%= notice %></aside>
-<% end %>
+<aside id="notice" <% unless notice %>style="display:none"<% end %>>
+  <%= notice %>
+</aside>
 
 <h1>Your Pragmatic Catalog</h1>
 
