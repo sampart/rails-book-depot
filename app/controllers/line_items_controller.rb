@@ -69,7 +69,10 @@ class LineItemsController < ApplicationController
   def decrement
     @line_item.quantity-= 1
     @line_item.save!
-    redirect_to store_index_url
+    respond_to do |format|
+      format.html { redirect_to store_index_url }
+      format.js { @cart = @line_item.cart }
+    end
   end
 
   private
