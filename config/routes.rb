@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :orders
   resources :line_items
   post 'line_items/:id/decrement', to: 'line_items#decrement', as: 'line_items_decrement'
   resources :carts
