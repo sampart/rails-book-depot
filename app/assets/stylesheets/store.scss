@@ -28,6 +28,9 @@
       .price {
       font-size: 1.414em; }
       }
+      .highlight {
+        animation: item-highlight 1s;
+      }
 
       form, div {
         display: inline;

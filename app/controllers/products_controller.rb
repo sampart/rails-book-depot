@@ -49,6 +49,7 @@ class ProductsController < ApplicationController
 
         @products = Product.all.order(:title)
         @counter = session[:counter]
+        @updated_id = @product.id
         ActionCable.server.broadcast 'products',
           html: render_to_string('store/index', layout: false)
       else

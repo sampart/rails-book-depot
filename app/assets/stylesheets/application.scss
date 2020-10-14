@@ -109,3 +109,13 @@ main {
     }
   }
 }
+
+@keyframes item-highlight {
+  0% {
+    background: #8f8;
+  }
+  
+  100% {
+    background: none;
+  }
+}
