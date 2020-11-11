@@ -7,6 +7,7 @@
 # Visit http://www.pragmaticprogrammer.com/titles/rails6 for more book information.
 #---
 # encoding: utf-8
+LineItem.delete_all
 Product.delete_all
 Product.create!(title: 'Docker for Rails Developers',
   description:
@@ -57,3 +58,9 @@ Product.create!(title: 'Programming Crystal',
       </p>},
   image_url: 'crystal.jpg',
   price: 40.00)
+
+# Added subsequently
+PayType.delete_all
+PayType.create!(description: "Check")
+PayType.create!(description: "Credit card")
+PayType.create!(description: "Purchase order")
