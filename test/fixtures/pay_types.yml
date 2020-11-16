@@ -1,7 +1,7 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  description: MyString
+credit_card:
+  description: Credit Card
 
-two:
-  description: MyString
+purchase_order:
+  description: Purchase Order
