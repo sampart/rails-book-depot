@@ -4,10 +4,10 @@ one:
   name: Dave Thomas
   address: MyText
   email: dave@example.org
-  pay_type_id: 1 # TODO `pay_type: credit_card` should work but doesn't
+  pay_type: credit_card
 
 two:
   name: MyString
   address: MyText
   email: MyString
-  pay_type_id: 2
+  pay_type: purchase_order
