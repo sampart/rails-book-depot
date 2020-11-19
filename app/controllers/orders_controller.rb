@@ -27,7 +27,9 @@ class OrdersController < ApplicationController
   # POST /orders
   # POST /orders.json
   def create
-    @order = Order.new(order_params)
+    params = order_params
+    params[:pay_type] = PayType.find_by!({:description => params[:pay_type]})
+    @order = Order.new(params)
     @order.add_line_items_from_cart(@cart)
 
     respond_to do |format|
@@ -75,7 +77,7 @@ class OrdersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def order_params
-      params.require(:order).permit(:name, :address, :email, :pay_type_id)
+      params.require(:order).permit(:name, :address, :email, :pay_type)
     end
 
     def pay_type_params
