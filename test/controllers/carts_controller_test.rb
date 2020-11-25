@@ -1,10 +1,6 @@
 require 'test_helper'
 
 class CartsControllerTest < ActionDispatch::IntegrationTest
-  setup do
-    @cart = carts(:one)
-  end
-
   test "should get index" do
     get carts_url
     assert_response :success
@@ -24,18 +20,19 @@ class CartsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should show cart" do
-    get cart_url(@cart)
+    get cart_url(new_cart_in_session)
     assert_response :success
   end
 
   test "should get edit" do
-    get edit_cart_url(@cart)
+    get edit_cart_url(new_cart_in_session)
     assert_response :success
   end
 
   test "should update cart" do
-    patch cart_url(@cart), params: { cart: {  } }
-    assert_redirected_to cart_url(@cart)
+    cart = new_cart_in_session
+    patch cart_url(cart), params: { cart: {  } }
+    assert_redirected_to cart_url(cart)
   end
 
   test "should destroy cart" do
@@ -47,5 +44,12 @@ class CartsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to store_index_url
+  end
+
+  private
+
+  def new_cart_in_session
+    get new_order_url # will set a new cart in session
+    Cart.find(session[:cart_id])
   end
 end
