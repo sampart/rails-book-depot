@@ -2,7 +2,7 @@ require "application_system_test_case"
 
 class LineItemsTest < ApplicationSystemTestCase
   setup do
-    @line_item = line_items(:one)
+    @line_item = line_items(:two)
   end
 
   test "visiting the index" do
@@ -18,8 +18,8 @@ class LineItemsTest < ApplicationSystemTestCase
     fill_in "Product", with: @line_item.product_id
     click_on "Create Line item"
 
-    assert_text "Line item was successfully created"
-    click_on "Back"
+    assert_selector 'h2', text: 'Your Cart'
+    assert_selector 'td', text: "Programming Ruby 1.9"
   end
 
   test "updating a Line item" do
@@ -35,11 +35,20 @@ class LineItemsTest < ApplicationSystemTestCase
   end
 
   test "destroying a Line item" do
+    # destroy the fixture line items - we'll be explicitly
+    # creating one that we want to work with
+    LineItem.destroy_all
+
+    # put something in the cart
+    # this will also create a cart and add to session
+    visit store_index_url
+    click_on "Add to cart", match: :first
+    
     visit line_items_url
     page.accept_confirm do
       click_on "Destroy", match: :first
     end
 
-    assert_text "Line item was successfully destroyed"
+    assert_text "Line item was successfully removed"
   end
 end

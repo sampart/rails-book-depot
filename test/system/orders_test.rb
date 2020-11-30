@@ -11,6 +11,10 @@ class OrdersTest < ApplicationSystemTestCase
   end
 
   test "creating a Order" do
+    # put something in the cart
+    visit store_index_url
+    click_on "Add to cart", match: :first
+
     visit orders_url
     click_on "New Order"
 
@@ -18,7 +22,7 @@ class OrdersTest < ApplicationSystemTestCase
     fill_in "Email", with: @order.email
     fill_in "Name", with: @order.name
     fill_in "Pay type", with: @order.pay_type
-    click_on "Create Order"
+    click_on "Place Order"
 
     assert_text "Order was successfully created"
     click_on "Back"
@@ -31,8 +35,7 @@ class OrdersTest < ApplicationSystemTestCase
     fill_in "Address", with: @order.address
     fill_in "Email", with: @order.email
     fill_in "Name", with: @order.name
-    fill_in "Pay type", with: @order.pay_type
-    click_on "Update Order"
+    click_on "Place Order"
 
     assert_text "Order was successfully updated"
     click_on "Back"
