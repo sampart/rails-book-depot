@@ -52,7 +52,7 @@ class OrdersTest < ApplicationSystemTestCase
     assert_text "Order was successfully destroyed"
   end
 
-  test "check routing number" do
+  test "check routing number appears" do
     visit store_index_url
     click_on 'Add to cart', match: :first
     click_on 'Checkout'
