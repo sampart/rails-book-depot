@@ -5,3 +5,6 @@ credit_card:
 
 purchase_order:
   description: Purchase Order
+
+check:
+  description: Check
