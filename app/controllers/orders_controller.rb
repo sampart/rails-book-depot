@@ -2,7 +2,7 @@ class OrdersController < ApplicationController
   include CurrentCart
   before_action :set_cart, only: [:new, :create]
   before_action :ensure_cart_isnt_empty, only: [:new]
-  before_action :set_order, only: [:show, :edit, :update, :destroy]
+  before_action :set_order, only: [:show, :edit, :update, :destroy, :ship_it]
 
   # GET /orders
   # GET /orders.json
@@ -58,6 +58,13 @@ class OrdersController < ApplicationController
         format.json { render json: @order.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  # POST /orders/1/ship_it
+  def ship_it
+    @order.ship_date = Time.zone.now
+    @order.save
+    OrderMailer.shipped(@order).deliver_later
   end
 
   # DELETE /orders/1

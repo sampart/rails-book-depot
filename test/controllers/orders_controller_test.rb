@@ -53,4 +53,22 @@ class OrdersControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to orders_url
   end
+
+  test "should send notification when order shipped" do
+    order = Order.all[0]
+    assert_nil order.ship_date
+
+    perform_enqueued_jobs do
+      post order_ship_it_url(order)
+    end
+
+    order.reload
+    refute_nil order.ship_date
+
+    mail = ActionMailer::Base.deliveries.last
+    refute_nil mail
+    assert_equal [order.email], mail.to
+    assert_equal 'Sam Ruby <depot@example.com>', mail[:from].value
+    assert_equal "Pragmatic Store Order Shipped", mail.subject
+  end
 end

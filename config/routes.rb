@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resources :orders
+  post 'orders/:id/ship_it', to: 'orders#ship_it', as: 'order_ship_it'
   resources :line_items
   post 'line_items/:id/decrement', to: 'line_items#decrement', as: 'line_items_decrement'
   resources :carts
