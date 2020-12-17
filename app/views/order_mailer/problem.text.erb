@@ -1,0 +1,5 @@
+Dear <%= @order.name %>
+Thank you for your recent order from The Pragmatic Store. You ordered the following items:
+<%= render @order.line_items -%>
+
+There was a problem paying, though: <%= @problem %>

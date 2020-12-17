@@ -5,16 +5,18 @@ class Pago
                         payment_details:)
     case payment_method
     when :check
+      account_num = payment_details.fetch(:account).to_s
       Rails.logger.info "Processing check: " +
-      payment_details.fetch(:routing).to_s + "/" +
-      payment_details.fetch(:account).to_s
+        payment_details.fetch(:routing).to_s + "/" +
+        account_num
+      return OpenStruct.new(succeeded?: false, error: "negative!") if account_num.to_i < 0
     when :credit_card
       Rails.logger.info "Processing credit_card: " +
-      payment_details.fetch(:cc_num).to_s + "/" +
-      payment_details.fetch(:expiration_month).to_s + "/" + payment_details.fetch(:expiration_year).to_s
+        payment_details.fetch(:cc_num).to_s + "/" +
+        payment_details.fetch(:expiration_month).to_s + "/" + payment_details.fetch(:expiration_year).to_s
     when :po
       Rails.logger.info "Processing purchase order: " +
-      payment_details.fetch(:po_num).to_s
+        payment_details.fetch(:po_num).to_s
     else
       raise "Unknown payment_method #{payment_method}"
     end
