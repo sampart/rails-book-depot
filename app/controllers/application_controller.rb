@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
 
   def report_error(exception)
     AdministrationMailer.exception(exception.message).deliver_later
+    raise
   end
 
   # This route is only accessible in the test environment
