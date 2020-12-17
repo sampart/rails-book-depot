@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :users
   resources :orders
   post 'orders/:id/ship_it', to: 'orders#ship_it', as: 'order_ship_it'
   resources :line_items
