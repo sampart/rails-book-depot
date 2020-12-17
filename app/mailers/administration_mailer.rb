@@ -5,11 +5,9 @@ class AdministrationMailer < ApplicationMailer
   #
   #   en.administration_mailer.exception.subject
   #
-  def exception(exception)
-    @exception = exception
+  def exception(exception_message)
+    @exception = exception_message
 
-    # TODO specify in config?
-    # Machine-specific config?
-    mail to: "sampart@github.com"
+    mail to: "sampart@github.com", subject: "Application exception"
   end
 end
