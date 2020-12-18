@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  get 'admin' => 'admin#index'
+  controller 'sessions' do
+    get 'login' => :new
+    post 'login' => :create
+    delete 'logout' => :destroy
+  end
   resources :users
   resources :orders
   post 'orders/:id/ship_it', to: 'orders#ship_it', as: 'order_ship_it'
