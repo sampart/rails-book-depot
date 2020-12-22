@@ -2,8 +2,10 @@ require 'test_helper'
 
 class ApplicationControllerTest < ActionDispatch::IntegrationTest
   test "should handle exceptions" do
-    perform_enqueued_jobs do
-      get test_raise_error_url
+    assert_raises StandardError do
+      perform_enqueued_jobs do
+        get test_raise_error_url
+      end
     end
 
     mail = ActionMailer::Base.deliveries.last
