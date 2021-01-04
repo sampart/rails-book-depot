@@ -33,9 +33,18 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "update requires original password" do
+    patch user_url(@user), params: { user: { name: @user.name, password: 'secret2', password_confirmation: 'secret2', original_password: 'wrong' } }
+    assert_response :success
+    assert_match 'must match existing password', @response.body
+  end
+
   test "should update user" do
-    patch user_url(@user), params: { user: { name: @user.name, password: 'secret', password_confirmation: 'secret' } }
+    patch user_url(@user), params: {
+      user: { name: @user.name, password: 'secret2', password_confirmation: 'secret2', original_password: 'secret' }
+    }
     assert_redirected_to users_url
+    assert_match 'successfully updated', @response.body
   end
 
   test "should destroy user" do

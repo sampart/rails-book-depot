@@ -20,8 +20,15 @@
     <%= form.text_field :name, size: 40 %>
   </div>
 
+  <% if defined?(edit) %>
+    <div class="field">
+    <%= form.label :original_password, 'Current password:' %>
+    <%= form.password_field :original_password, size: 40 %>
+  </div>
+  <% end %>
+
   <div class="field">
-    <%= form.label :password, 'Password:' %>
+    <%= form.label :password, 'New password:' %>
     <%= form.password_field :password, size: 40 %>
   </div>
 
