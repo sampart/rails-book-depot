@@ -14,13 +14,12 @@ class UsersTest < ApplicationSystemTestCase
     visit users_url
     click_on "New User"
 
-    fill_in "Name", with: @user.name
-    fill_in "Password", with: 'secret'
-    fill_in "Password confirmation", with: 'secret'
+    fill_in "Name", with: "bob"
+    fill_in "New password:", with: 'secret'
+    fill_in "Confirm:", with: 'secret'
     click_on "Create User"
 
-    assert_text "User was successfully created"
-    click_on "Back"
+    assert_text "User bob was successfully created"
   end
 
   test "updating a User" do
@@ -28,15 +27,16 @@ class UsersTest < ApplicationSystemTestCase
     click_on "Edit", match: :first
 
     fill_in "Name", with: @user.name
-    fill_in "Password", with: 'secret'
-    fill_in "Password confirmation", with: 'secret'
+    fill_in "Current password:", with: 'secret'
+    fill_in "New password:", with: 'secret'
+    fill_in "Confirm:", with: 'secret'
     click_on "Update User"
 
-    assert_text "User was successfully updated"
-    click_on "Back"
+    assert_text "User dave was successfully updated"
   end
 
   test "destroying a User" do
+    login_as users(:two) # so we're not deleting ourself
     visit users_url
     page.accept_confirm do
       click_on "Destroy", match: :first
