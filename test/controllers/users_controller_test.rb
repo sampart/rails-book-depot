@@ -44,6 +44,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       user: { name: @user.name, password: 'secret2', password_confirmation: 'secret2', original_password: 'secret' }
     }
     assert_redirected_to users_url
+    follow_redirect!
     assert_match 'successfully updated', @response.body
   end
 

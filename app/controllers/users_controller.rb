@@ -41,7 +41,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1.json
   def update
     respond_to do |format|
-      if @user.update(user_params)
+      if original_password_matches && @user.update(user_params)
         format.html { redirect_to users_url, notice: "User #{@user.name} was successfully updated." }
         format.json { render :show, status: :ok, location: @user }
       else
@@ -66,13 +66,25 @@ class UsersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = User.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def user_params
+    @user_params ||= params.require(:user).permit(:name, :password, :password_confirmation)
+  end
+
+  def original_password_matches
+    return false unless params[:user] && (params[:user].include? :original_password)
+
+    if BCrypt::Password.new(@user.password_digest) != params[:user][:original_password]
+      @user.errors.add(:original_password, "must match existing password")
+      return false
     end
 
-    # Only allow a list of trusted parameters through.
-    def user_params
-      @user_params ||= params.require(:user).permit(:name, :password, :password_confirmation, :original_password)
-    end
+    true
+  end
 end
