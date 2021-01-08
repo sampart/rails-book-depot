@@ -23,4 +23,18 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     delete logout_url
     assert_redirected_to store_index_url
   end
+
+  test "where no users exist, can log in with any credentials" do
+    User.delete_all
+    logout
+    post login_url, params: { name: "random", password: "whatever" }
+
+    # login page should let you through
+    assert_redirected_to admin_url
+    assert_equal "setup", session[:user_id]
+
+    # and then the admin page itself shouldn't send you back to login
+    follow_redirect!
+    assert_response :success
+  end
 end
