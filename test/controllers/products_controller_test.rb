@@ -56,4 +56,17 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to products_url
   end
+
+  test "can access 'who bought' atom feed" do
+    get(
+      who_bought_product_url(id: @product.id, format: :atom),
+      headers: { Authorization: ActionController::HttpAuthentication::Basic.encode_credentials("dave", "secret") }
+    )
+    assert_response :success
+  end
+
+  test "'who bought' atom feed requires basic auth" do
+    get who_bought_product_url(id: @product.id, format: :atom)
+    assert_response 401
+  end
 end
