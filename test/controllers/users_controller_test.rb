@@ -10,6 +10,12 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "must be logged in to see index" do
+    logout
+    get users_url
+    assert_redirected_to login_url
+  end
+
   test "should get new" do
     get new_user_url
     assert_response :success
@@ -21,6 +27,15 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to users_url
+  end
+
+  test "can't create user if logged out" do
+    logout
+    assert_no_difference('User.count') do
+      post users_url, params: { user: { name: 'sam', password: 'secret', password_confirmation: 'secret' } }
+    end
+
+    assert_redirected_to login_url
   end
 
   test "should show user" do
