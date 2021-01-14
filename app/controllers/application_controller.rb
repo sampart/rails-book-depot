@@ -16,8 +16,17 @@ class ApplicationController < ActionController::Base
   protected
 
   def authorize
-    unless session[:user_id] == SessionsController::SETUP_USER_ID || User.find_by(id: session[:user_id])
-      redirect_to login_url, notice: "Please log in"
+    respond_to do |format|
+      format.html do
+        unless session[:user_id] == SessionsController::SETUP_USER_ID || User.find_by(id: session[:user_id])
+          redirect_to login_url, notice: "Please log in"
+        end
+      end
+      format.all do
+        authenticate_or_request_with_http_basic do |username, password|
+          User.find_by(name: username)&.authenticate(password)
+        end
+      end
     end
   end
 end
