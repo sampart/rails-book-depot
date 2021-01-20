@@ -6,16 +6,19 @@ Rails.application.routes.draw do
     delete 'logout' => :destroy
   end
   resources :users
-  resources :orders
-  post 'orders/:id/ship_it', to: 'orders#ship_it', as: 'order_ship_it'
-  resources :line_items
-  post 'line_items/:id/decrement', to: 'line_items#decrement', as: 'line_items_decrement'
-  resources :carts
-  root 'store#index', as: 'store_index'
   resources :products do
     get :who_bought, on: :member
   end
 
+  scope '(:locale)' do
+    resources :orders
+    resources :line_items
+    resources :carts
+    root 'store#index', as: 'store_index'
+  end
+  post 'orders/:id/ship_it', to: 'orders#ship_it', as: 'order_ship_it'
+  post 'line_items/:id/decrement', to: 'line_items#decrement', as: 'line_items_decrement'
+  
   if Rails.env.test?
     get 'test/raise_error', to: 'application#raise_error', as: 'test_raise_error'
   end
