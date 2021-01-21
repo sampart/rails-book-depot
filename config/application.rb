@@ -17,5 +17,7 @@ module Depot
     # the framework and any gems in your application.
 
     config.filter_parameters += [ :credit_card_number ]
+
+    config.i18n.fallbacks = true
   end
 end
