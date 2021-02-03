@@ -30,6 +30,13 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
+  errors:
+    template:
+      body:        "There were problems with the following fields:"
+      header:       
+        one:       "1 error prohibited this %{model} from being saved"
+        other:     "%{count} errors prohibited this %{model} from being saved"
+
   layouts:
     application:
       title: "The Pragmatic Bookshelf"
@@ -47,16 +54,19 @@ en:
       empty: "Empty cart"
       checkout: "Checkout"
   orders:
+    new:
+      legend:       "Please Enter Your Details"
     form:
-      submit: "Submit"
-      name: "Name"
+      name:         "Name"
       address_html: "Address"
-      email: "Email"
-      pay_type: "Pay type"
+      email:        "E-mail"
+      pay_type:     "Pay with"
       pay_prompt_html: "Select a payment method"
-      check: "Check"
-      credit_card: "Credit card"
-      purchase_order: "Purchase order"
+      submit:       "Place Order"
+      pay_types:
+        check:           "Check"
+        credit_card:     "Credit Card"
+        purchase_order:  "Purchase Order"
       check_pay_type:
         routing_number: "Routing #"
         account_number: "Account #"
@@ -65,6 +75,8 @@ en:
         expiration_date: "Expiry"
       purchase_order_pay_type:
         po_number: "PO #"
+
+  thanks:          "Thank you for your order"
 
   number:
     currency:
