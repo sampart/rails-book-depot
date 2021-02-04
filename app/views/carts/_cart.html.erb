@@ -20,7 +20,7 @@
                 remote: true,
                 data: { confirm: 'Are you sure?' } %>
   <% unless defined?(@order) %>
-    <%= button_to t('.checkout'), new_order_path,
+    <%= button_to t('.checkout'), new_order_path(locale: I18n.locale),
                   method: :get,
                   class: "checkout" %>
   <% end %>  
