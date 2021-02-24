@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     resources :line_items
     resources :carts
     root 'store#index', as: 'store_index'
+    post '/' => 'store#index', as: 'store_index_post'
   end
   post 'orders/:id/ship_it', to: 'orders#ship_it', as: 'order_ship_it'
   post 'line_items/:id/decrement', to: 'line_items#decrement', as: 'line_items_decrement'
