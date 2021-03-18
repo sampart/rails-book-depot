@@ -17,7 +17,7 @@
               method: :post, remote: true %>
           <h2><%= product.title %></h2>
           <p>
-            <%= sanitize(product.description)%>
+            <%= product.description %>
           </p>
           <div class="price">
             <%= localise_usd_number_and_format_as_currency(product.price) %>
