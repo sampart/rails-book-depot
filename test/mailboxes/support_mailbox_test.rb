@@ -13,13 +13,13 @@ class SupportMailboxTest < ActionMailbox::TestCase
     assert_equal "sam@example.com", support_request.email
     assert_equal "Help!", support_request.subject
     assert_equal "I can't figure out how to check out!!", support_request.body
-    assert_nil support_request.order
+    assert_empty support_request.orders
   end
 
-  test "we create a SupportRequest with the most recent order" do
+  test "we create a SupportRequest with the most customer's orders" do
     recent_order = orders(:one)
     older_order = orders(:another_one)
-    non_customer = orders(:other_customer)
+    # orders(:other_customer) is a different customer
 
     receive_inbound_email_from_mail(
       to: "support@example.com",
@@ -30,8 +30,10 @@ class SupportMailboxTest < ActionMailbox::TestCase
 
     support_request = SupportRequest.last
     assert_equal recent_order.email, support_request.email
+    assert_equal older_order.email, support_request.email
     assert_equal "Help!", support_request.subject
     assert_equal "I can't figure out how to check out!!", support_request.body
-    assert_equal recent_order, support_request.order
+    assert_includes support_request.orders, recent_order
+    assert_includes support_request.orders, older_order
   end
 end

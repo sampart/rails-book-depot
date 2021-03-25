@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_12_142922) do
+ActiveRecord::Schema.define(version: 2021_03_23_164450) do
 
   create_table "action_mailbox_inbound_emails", force: :cascade do |t|
     t.integer "status", default: 0, null: false
@@ -79,6 +79,11 @@ ActiveRecord::Schema.define(version: 2021_03_12_142922) do
     t.integer "pay_type_id", null: false
     t.datetime "ship_date"
     t.index ["pay_type_id"], name: "index_orders_on_pay_type_id"
+  end
+
+  create_table "orders_support_requests", id: false, force: :cascade do |t|
+    t.integer "order_id", null: false
+    t.integer "support_request_id", null: false
   end
 
   create_table "pay_types", force: :cascade do |t|

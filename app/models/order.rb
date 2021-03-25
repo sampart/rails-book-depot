@@ -5,6 +5,7 @@ require 'pago'
 class Order < ApplicationRecord
   has_many :line_items, dependent: :destroy
   belongs_to :pay_type
+  has_and_belongs_to_many :support_requests
 
   validates :name, :address, :email, presence: true
   validates_presence_of :pay_type

@@ -12,35 +12,37 @@
           <%= support_request.body %>
         </blockquote>
       </p>
-      <% if support_request.order %>
-        <h3>Recent Order</h3>
-        <dl>
-          <dt>Name</dt>
-          <dd><%= support_request.order.name %></dd>
+      <% if support_request.orders.any? %>
+        <h3>Recent Orders</h3>
+        <%= support_request.orders.each_with_index.map do |order, index| %>
+          <dl>
+            <dt>Name</dt>
+            <dd><%= support_request.order.name %></dd>
 
-          <dt>Email</dt>
-          <dd><%= support_request.order.email %></dd>
+            <dt>Email</dt>
+            <dd><%= support_request.order.email %></dd>
 
-          <dt>Address</dt>
-          <dd><%= support_request.order.address %></dd>
+            <dt>Address</dt>
+            <dd><%= support_request.order.address %></dd>
 
-          <dt>PayType</dt>
-          <dd><%= support_request.order.pay_type %></dd>
+            <dt>PayType</dt>
+            <dd><%= support_request.order.pay_type %></dd>
 
-          <dt>Line Items</dt>
-          <dd>
-            <ul>
-              <% support_request.order.line_items.each do |line_item| %>
-                <li>
-                  <%= line_item.product.title %>
-                  (<%= line_item.product.price %>)
-                </li>
-              <% end %>
-            </ul>
-          </dd>
-        </dl>
+            <dt>Line Items</dt>
+            <dd>
+              <ul>
+                <% support_request.order.line_items.each do |line_item| %>
+                  <li>
+                    <%= line_item.product.title %>
+                    (<%= line_item.product.price %>)
+                  </li>
+                <% end %>
+              </ul>
+            </dd>
+          </dl>
+        <% end %>
       <% else %>
-        <h3 class="notice">No associated order</h3>
+        <h3 class="notice">No associated orders</h3>
       <% end %>
 
       <% if support_request.response.blank? %>
